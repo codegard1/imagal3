@@ -87,8 +87,7 @@ const GalleryPage = ({ data }) => {
 
   const photos = data.allImageSharp.edges.map(edge => ({
     key: `photo-${edge.node.id}`,
-    title: edge.node.fluid.originalName,
-    src: edge.node.fluid.base64 ,
+    ...edge.node
   }));
 
   const columnCount = React.useRef(0);
@@ -115,7 +114,7 @@ const GalleryPage = ({ data }) => {
         <div className={classNames.listGridSizer}>
           <div className={classNames.listGridPadder}>
             {/* <Img fluid={item.fluid} /> */}
-            <img src={item.srcSet} className={classNames.listGridImage} />
+            <img src={item.fluid.src} className={classNames.listGridImage} />
             <span className={classNames.listGridLabel}>{item.title}</span>
           </div>
         </div>
@@ -145,9 +144,9 @@ const GalleryPage = ({ data }) => {
             <Carousel
               currentIndex={currentImage}
               views={photos.map(x => ({
-                ...x,
-                // srcset: x.srcSet,
-                // caption: x.title
+                ...x.original,
+                srcSet: x.fluid.srcSet,
+                caption: x.fluid.originalName
               }))}
             />
           </Modal>
@@ -159,7 +158,7 @@ const GalleryPage = ({ data }) => {
 
 export const pageQuery = graphql`
 query {
-  allImageSharp(limit: 50, skip: 2) {
+  allImageSharp(limit: 1000, skip: 0) {
     edges {
       node {
         id
@@ -168,15 +167,16 @@ query {
           width
           src
         }
-        fluid {
-          base64
+        fluid(fit: COVER, cropFocus: CENTER, maxHeight: 100, maxWidth: 100, toFormat: PNG, pngCompressionSpeed: 8, pngQuality: 3) {
           srcSet
           originalImg
           originalName
+          src
         }
       }
     }
   }
-}`;
+}
+`;
 
 export default GalleryPage;
