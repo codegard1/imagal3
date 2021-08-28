@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
-  "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "name": "imagal3",
+  "private": false,
+  "description": "A simple image gallery implemented with React and Fluent UI",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Chris Odegard <c.odegard@gmail.com>",
   "dependencies": {
     "@fluentui/react": "^8.29.1",
     "@fluentui/react-hooks": "^8.2.7",
@@ -26,7 +26,10 @@
     "prettier": "2.0.5"
   },
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "fluentui",
+    "react",
+    "image gallery"
   ],
   "license": "MIT",
   "scripts": {
@@ -40,9 +43,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    "url": "https://github.com/codegard1/imagal3"
   },
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/codegard1/imagal3/issues"
   }
 }
