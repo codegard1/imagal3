@@ -41,5 +41,5 @@ yarn-error.log
 # Yarn Integrity file
 .yarn-integrity
 
-src/images/
+# src/images/
 .git
