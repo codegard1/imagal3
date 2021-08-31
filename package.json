@@ -38,8 +38,10 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "clean": "gatsby clean && rm -rf node_modules",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "containerize": "docker build -t codegard1/imagal3:0.1.0 . --compress",
+    "exec": "docker run --rm -it -p 8080:80 codegard1/imagal3:0.1.0"
   },
   "repository": {
     "type": "git",
