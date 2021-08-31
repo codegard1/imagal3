@@ -1,24 +1,31 @@
 # Use Node 12 or higher
-FROM node:14
+FROM node:14 AS builder
 
-# Create the app directory
 WORKDIR /usr/src/app
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
+COPY package*.json .
 
+# Install dependencies from package-lock.json
+# RUN npm ci
+RUN npm ci --only=production
 
 # Install the Gatsby CLI 2.x.x 
 RUN npm install -g gatsby-cli@2.19.3
-RUN npm install
-# If you are building your code for production
-# RUN npm ci --only=production
-RUN gatsby build
 
-# Bundle app source
 COPY . .
 
-EXPOSE 9000
-CMD [ "gatsby","serve" ]
+# Build app to public/
+RUN gatsby build
+
+FROM nginx:alpine AS server
+
+WORKDIR /usr/share/nginx/html
+
+# Remove NGINX default files
+RUN rm -rf ./*
+
+# Copy public/ from app source to NGINX dir
+COPY --from=builder /usr/src/app/public .
+
+# Define entrypoint for the app executable
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
